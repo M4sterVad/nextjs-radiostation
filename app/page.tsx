@@ -45,7 +45,7 @@ const Home: React.FC = () => {
       <p className="text-lg font-medium text-gray-300 mb-16 text-center">
         Displaying {data?.count || 0} of {data?.totalCount || 0} total stations.
       </p>
-      <div className="grid gap-8">
+      <div className="grid gap-4 md:gap-8">
         {data?.playables.map((station: Playable) => (
           <div
             key={station.id}

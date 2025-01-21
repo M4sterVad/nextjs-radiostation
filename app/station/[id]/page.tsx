@@ -55,7 +55,7 @@ const StationDetailsPage = () => {
   console.log("station", station);
 
   return (
-    <main className="container mx-auto p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
+    <main className="container mx-auto md:mt-10 p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
       <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-400">{station.name}</h1>
       <picture className="flex justify-center mb-6">
         <img
@@ -69,23 +69,20 @@ const StationDetailsPage = () => {
         <span className="text-blue-400 font-bold">Genres:</span> {genres.join(", ")}
       </p>
   
-      <p className="text-base leading-relaxed mb-6 bg-gray-800 p-4 rounded-lg shadow-inner">
+      <p className="text-base leading-relaxed tracking-widest mb-6 bg-gray-800 p-4 rounded-lg shadow-inner">
         {station.description}
       </p>
   
-      <div className="grid grid-cols-2 gap-4 text-sm">
-        <p>
-          <strong className="text-blue-400">City:</strong> {station.city}
+      <div className="flex items-center justify-between bg-gray-800 p-4 rounded-lg shadow-inner mb-6">
+        <p className="text-sm">
+          <strong className="text-blue-400">Location:</strong> {station.city}, {station.country}
         </p>
-        <p>
-          <strong className="text-blue-400">Country:</strong> {station.country}
-        </p>
-        <p className="col-span-2">
+        <p className="text-sm">
           <strong className="text-blue-400">Topics:</strong> {topics.join(", ")}
         </p>
       </div>
   
-      <p className="mt-6">
+      <p>
         <strong className="text-blue-400">Listen here:</strong>{" "}
         <a
           href={station.homepageUrl}
@@ -118,6 +115,7 @@ const StationDetailsPage = () => {
       )}
     </main>
   );
+  
   
 };
 

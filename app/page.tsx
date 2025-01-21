@@ -38,8 +38,8 @@ const Home: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-5xl font-bold my-4">{data?.title || "Radio Stations"}</h1>
+    <main className="container tracking-wider mx-auto p-4">
+      <h1 className="text-5xl font-bold text-blue-400 my-4">{data?.title || "Radio Stations"}</h1>
       <p className="text-gray-300 mb-16">
         Displaying {data?.count || 0} of {data?.totalCount || 0} total stations.
       </p>

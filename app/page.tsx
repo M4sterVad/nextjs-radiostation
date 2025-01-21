@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { getRadioStations } from "./api/getRadioStations";
-import { ApiResponse, Playable } from "./types/radioStation";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getRadioStations } from './api/getRadioStations';
+import { ApiResponse, Playable } from './types/radioStation';
 
 const Home: React.FC = () => {
   const [data, setData] = useState<ApiResponse | null>(null);
@@ -16,9 +16,9 @@ const Home: React.FC = () => {
       try {
         const response = await getRadioStations();
         setData(response);
-        
-       // console.log("Fetched Radio Stations:", response);
-      
+
+        // console.log("Fetched Radio Stations:", response);
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message);
@@ -38,17 +38,19 @@ const Home: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <main className="container tracking-wider mx-auto p-4">
-      <h1 className="text-5xl font-bold text-blue-400 my-4">{data?.title || "Radio Stations"}</h1>
-      <p className="text-gray-300 mb-16">
+    <main className="container tracking-wider mx-auto md:mt-10 p-4 md:p-8 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
+      <h1 className="text-5xl font-extrabold text-center text-blue-400 mb-6">
+        {data?.title || 'Radio Stations'}
+      </h1>
+      <p className="text-lg font-medium text-gray-300 mb-16 text-center">
         Displaying {data?.count || 0} of {data?.totalCount || 0} total stations.
       </p>
       <div className="grid gap-8">
         {data?.playables.map((station: Playable) => (
           <div
             key={station.id}
-            className="border p-4 rounded-lg shadow-md flex items-center space-x-4 cursor-pointer 
-                       transition-transform transform hover:scale-105 hover:shadow-lg hover:border-blue-500"
+            className="bg-gray-800 p-4 md:p-8 rounded-lg shadow-md flex items-center space-x-6 cursor-pointer 
+   transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
             onClick={() => handleStationClick(station.id)}
           >
             <picture>
@@ -59,12 +61,17 @@ const Home: React.FC = () => {
               />
             </picture>
             <div>
-              <h2 className="text-lg font-bold">{station.name}</h2>
+              <h2 className="text-lg font-bold text-blue-400">
+                {station.name}
+              </h2>
               <p className="text-gray-300">
                 {station.city}, {station.country}
               </p>
               <p className="text-sm text-gray-400">
-                Genres: {Array.isArray(station.genres) ? station.genres.join(", ") : "N/A"}
+                Genres:{' '}
+                {Array.isArray(station.genres)
+                  ? station.genres.join(', ')
+                  : 'N/A'}
               </p>
             </div>
           </div>
@@ -72,7 +79,6 @@ const Home: React.FC = () => {
       </div>
     </main>
   );
-  
 };
 
 export default Home;

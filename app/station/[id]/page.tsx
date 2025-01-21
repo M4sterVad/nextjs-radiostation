@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { getRadioStationDetails } from "@/app/api/getRadioStations";
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { getRadioStationDetails } from '@/app/api/getRadioStations';
 
 type StationDetails = {
   name: string;
@@ -31,7 +31,7 @@ const StationDetailsPage = () => {
       try {
         const data = await getRadioStationDetails(stationId);
         setStation(data[0]);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -52,11 +52,13 @@ const StationDetailsPage = () => {
   const streams = station.streams || [];
   const topics = station.topics || [];
 
-  console.log("station", station);
+  console.log('station', station);
 
   return (
     <main className="container tracking-wider mx-auto md:mt-10 p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
-      <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-400">{station.name}</h1>
+      <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-400">
+        {station.name}
+      </h1>
       <picture className="flex justify-center mb-6">
         <img
           src={station.logo100x100}
@@ -64,26 +66,28 @@ const StationDetailsPage = () => {
           className="w-40 h-40 object-cover rounded-full border-4 border-blue-500 shadow-md"
         />
       </picture>
-  
+
       <p className="text-lg font-medium text-gray-200 mb-4">
-        <span className="text-blue-400 font-bold">Genres:</span> {genres.join(", ")}
+        <span className="text-blue-400 font-bold">Genres:</span>{' '}
+        {genres.join(', ')}
       </p>
-  
+
       <p className="text-base leading-relaxed tracking-widest mb-6 bg-gray-800 p-4 md:p-8 rounded-lg shadow-inner">
         {station.description}
       </p>
-  
+
       <div className="flex items-center justify-between bg-gray-800 p-4 md:p-8 rounded-lg shadow-inner mb-6">
         <p className="text-sm">
-          <strong className="text-blue-400">Location:</strong> {station.city}, {station.country}
+          <strong className="text-blue-400">Location:</strong> {station.city},{' '}
+          {station.country}
         </p>
         <p className="text-sm">
-          <strong className="text-blue-400">Topics:</strong> {topics.join(", ")}
+          <strong className="text-blue-400">Topics:</strong> {topics.join(', ')}
         </p>
       </div>
-  
+
       <p>
-        <strong className="text-blue-400">Listen here:</strong>{" "}
+        <strong className="text-blue-400">Listen here:</strong>{' '}
         <a
           href={station.homepageUrl}
           target="_blank"
@@ -93,8 +97,10 @@ const StationDetailsPage = () => {
           {station.homepageUrl}
         </a>
       </p>
-  
-      <h2 className="mt-10 text-2xl font-bold text-blue-400 mb-4">Streaming URL</h2>
+
+      <h2 className="mt-10 text-2xl font-bold text-blue-400 mb-4">
+        Streaming URL
+      </h2>
       {streams.length > 0 ? (
         <ul className="list-disc list-inside space-y-2">
           {streams.map((stream, index) => (
@@ -115,8 +121,6 @@ const StationDetailsPage = () => {
       )}
     </main>
   );
-  
-  
 };
 
 export default StationDetailsPage;

@@ -39,32 +39,31 @@ const Home: React.FC = () => {
 
   return (
     <main className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{data?.title || "Radio Stations"}</h1>
-      <p className="text-gray-500 mb-4">
+      <h1 className="text-5xl font-bold my-4">{data?.title || "Radio Stations"}</h1>
+      <p className="text-gray-300 mb-16">
         Displaying {data?.count || 0} of {data?.totalCount || 0} total stations.
       </p>
-      <div className="grid gap-4">
+      <div className="grid gap-8">
         {data?.playables.map((station: Playable) => (
           <div
             key={station.id}
-            className="border p-4 rounded-lg shadow-md flex items-center space-x-4 cursor-pointer"
+            className="border p-4 rounded-lg shadow-md flex items-center space-x-4 cursor-pointer 
+                       transition-transform transform hover:scale-105 hover:shadow-lg hover:border-blue-500"
             onClick={() => handleStationClick(station.id)}
           >
             <picture>
-            <img
-              src={station.logo100x100}
-              alt={station.name}
-              className="w-16 h-16 object-cover rounded-full"
-            />
-
+              <img
+                src={station.logo100x100}
+                alt={station.name}
+                className="w-16 h-16 object-cover rounded-full"
+              />
             </picture>
-      
             <div>
               <h2 className="text-lg font-bold">{station.name}</h2>
-              <p className="text-gray-500">
+              <p className="text-gray-300">
                 {station.city}, {station.country}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-400">
                 Genres: {Array.isArray(station.genres) ? station.genres.join(", ") : "N/A"}
               </p>
             </div>
@@ -73,6 +72,7 @@ const Home: React.FC = () => {
       </div>
     </main>
   );
+  
 };
 
 export default Home;

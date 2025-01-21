@@ -55,46 +55,58 @@ const StationDetailsPage = () => {
   console.log("station", station);
 
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{station.name}</h1>
-      <picture>
+    <main className="container mx-auto p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
+      <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-400">{station.name}</h1>
+      <picture className="flex justify-center mb-6">
         <img
           src={station.logo100x100}
           alt={station.name}
-          className="w-32 h-32 object-cover mb-4"
+          className="w-40 h-40 object-cover rounded-full border-4 border-blue-500 shadow-md"
         />
       </picture>
-
-      <p className="text-lg font-semibold mb-2">Genres: {genres.join(", ")}</p>
-      <p className="text-gray-700 mb-4">{station.description}</p>
-      <p>
-        <strong>City:</strong> {station.city} <br />
-        <strong>Country:</strong> {station.country} <br />
-        <strong>Topics:</strong> {topics.join(", ")}
+  
+      <p className="text-lg font-medium text-gray-200 mb-4">
+        <span className="text-blue-400 font-bold">Genres:</span> {genres.join(", ")}
       </p>
-
-      <p>
-        <strong>Listen here:</strong>{" "}
+  
+      <p className="text-base leading-relaxed mb-6 bg-gray-800 p-4 rounded-lg shadow-inner">
+        {station.description}
+      </p>
+  
+      <div className="grid grid-cols-2 gap-4 text-sm">
+        <p>
+          <strong className="text-blue-400">City:</strong> {station.city}
+        </p>
+        <p>
+          <strong className="text-blue-400">Country:</strong> {station.country}
+        </p>
+        <p className="col-span-2">
+          <strong className="text-blue-400">Topics:</strong> {topics.join(", ")}
+        </p>
+      </div>
+  
+      <p className="mt-6">
+        <strong className="text-blue-400">Listen here:</strong>{" "}
         <a
           href={station.homepageUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 underline"
+          className="text-blue-300 hover:underline"
         >
           {station.homepageUrl}
         </a>
       </p>
-
-      <h2 className="mt-8 text-xl font-bold mb-4">Streaming URL</h2>
+  
+      <h2 className="mt-10 text-2xl font-bold text-blue-400 mb-4">Streaming URL</h2>
       {streams.length > 0 ? (
-        <ul>
+        <ul className="list-disc list-inside space-y-2">
           {streams.map((stream, index) => (
             <li key={index}>
               <a
                 href={stream.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 underline"
+                className="text-blue-300 hover:underline"
               >
                 {stream.url}
               </a>
@@ -102,10 +114,11 @@ const StationDetailsPage = () => {
           ))}
         </ul>
       ) : (
-        <p>No streaming URLs available.</p>
+        <p className="text-gray-400">No streaming URLs available.</p>
       )}
     </main>
   );
+  
 };
 
 export default StationDetailsPage;

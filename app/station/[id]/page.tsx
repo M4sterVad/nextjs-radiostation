@@ -36,7 +36,7 @@ const StationDetailsPage = () => {
       viewBox="0 0 24 24"
       strokeWidth="0.8"
       stroke="currentColor"
-      className="size-24 md:size-32 hover:bg-gray-800 rounded-md"
+      className="size-32 md:size-64 hover:bg-gray-800 rounded-md"
     >
       <path
         strokeLinecap="round"

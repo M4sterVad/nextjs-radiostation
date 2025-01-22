@@ -113,17 +113,20 @@ const StationDetailsPage = () => {
         {station.description}
       </p>
 
-      <div className="flex items-center justify-between bg-gray-800 p-4 md:p-8 rounded-lg shadow-inner mb-6">
+      <div className="flex items-center justify-start gap-8 bg-gray-800 p-4 md:p-8 rounded-lg shadow-inner mb-6">
         <p className="text-sm">
           <strong className="text-blue-400">Location:</strong> {station.city},{' '}
           {station.country}
         </p>
-        <p className="text-sm">
-          <strong className="text-blue-400">Topics:</strong> {topics.join(', ')}
-        </p>
+        {topics.length > 0 && (
+          <p className="text-sm">
+            <strong className="text-blue-400">Topics:</strong>{' '}
+            {topics.join(', ')}
+          </p>
+        )}
       </div>
 
-      <div className="relative flex justify-center items-center group">
+      <div className="relative flex justify-center items-center group md:my-16">
         <Link
           href={station.homepageUrl}
           target="_blank"
@@ -133,7 +136,7 @@ const StationDetailsPage = () => {
           {PlayIcon}
         </Link>
 
-        <span className="hidden md:block absolute left-1/2 transform -translate-x-1/2 mt-4 mb-2 text-xs text-gray-100 bg-gray-700 p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span className="hidden md:block absolute left-1/2 transform -translate-x-1/2 mt-52 mb-2 text-xs text-gray-100 bg-gray-700 p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
           {station.homepageUrl}
         </span>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getRadioStationDetails } from '@/app/api/getRadioStations';
 import Link from 'next/link';

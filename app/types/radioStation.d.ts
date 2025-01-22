@@ -22,3 +22,15 @@ export interface ApiResponse {
   title: string;
   totalCount: number;
 }
+
+export type StationDetails = {
+  name: string;
+  logo100x100: string;
+  genres: string[];
+  description: string;
+  homepageUrl: string;
+  city: string;
+  country: string;
+  topics: string[];
+  streams: { url: string }[];
+};

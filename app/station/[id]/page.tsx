@@ -4,24 +4,53 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getRadioStationDetails } from '@/app/api/getRadioStations';
 import Link from 'next/link';
-
-type StationDetails = {
-  name: string;
-  logo100x100: string;
-  genres: string[];
-  description: string;
-  homepageUrl: string;
-  city: string;
-  country: string;
-  topics: string[];
-  streams: { url: string }[];
-};
+import { StationDetails } from '@/app/types/radioStation';
 
 const StationDetailsPage = () => {
   const { id } = useParams();
   const [station, setStation] = useState<StationDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const BackIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="size-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+      />
+    </svg>
+  );
+
+  const PlayIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="0.8"
+      stroke="currentColor"
+      className="size-24 md:size-32 hover:bg-gray-800 rounded-md"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z"
+      />
+    </svg>
+  );
+
   useEffect(() => {
     if (!id) return;
 
@@ -55,14 +84,18 @@ const StationDetailsPage = () => {
   console.log('station', station);
 
   return (
-    <main className="container tracking-wider mx-auto md:mt-10 p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
-      <Link href="/" className="text-blue-400 font-bold pb-10">
-        &#8592; Back
+    <main className="container tracking-wider mx-auto md:my-10 p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
+      <Link
+        href="/"
+        className="text-blue-400 font-bold mb-10 rounded hover:bg-gray-800 p-2 inline-flex items-center"
+      >
+        {BackIcon}
       </Link>
 
       <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-400">
         {station.name}
       </h1>
+
       <picture className="flex justify-center mb-6">
         <img
           src={station.logo100x100}
@@ -90,46 +123,31 @@ const StationDetailsPage = () => {
         </p>
       </div>
 
-      <p className="relative group inline-block">
+      <div className="relative flex justify-center items-center group">
         <Link
           href={station.homepageUrl}
           target="_blank"
           rel="noopener noreferrer"
+          className="p-2"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="0.8"
-            stroke="currentColor"
-            className="size-24 md:size-32"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z"
-            />
-          </svg>
+          {PlayIcon}
         </Link>
 
-        {/* Tooltip */}
-        <span className="absolute left-1/2 transform -translate-x-1/2 mb-2 text-xs text-gray-100 bg-gray-700 p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span className="hidden md:block absolute left-1/2 transform -translate-x-1/2 mt-4 mb-2 text-xs text-gray-100 bg-gray-700 p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           {station.homepageUrl}
         </span>
-      </p>
+      </div>
 
-      <h2 className="mt-10 text-2xl font-bold text-blue-400 mb-4">
+      <h2 className="mt-10 mb-4 text-2xl font-bold text-blue-400">
         Streaming URLs
       </h2>
       {streams.length > 0 ? (
-        <ul className="list-disc list-inside space-y-2">
+        <ul className="space-y-2">
           {streams.map((stream, index) => (
-            <li key={index}>
+            <li
+              key={index}
+              className="overflow-hidden whitespace-nowrap text-ellipsis p-2"
+            >
               <Link
                 href={stream.url}
                 target="_blank"

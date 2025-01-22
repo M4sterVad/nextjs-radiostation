@@ -63,19 +63,21 @@ const Home: React.FC = () => {
           <div
             key={station.id}
             className="bg-gray-800 p-4 md:p-8 rounded-lg shadow-md flex items-center space-x-6 cursor-pointer 
-              transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
+          transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
             onClick={() => handleStationClick(station.id)}
           >
-            <picture>
+            <picture className="flex-shrink-0">
               <img
                 src={station.logo100x100}
                 alt={station.name}
                 className="w-16 h-16 object-cover rounded-full"
               />
             </picture>
-            <div>
-              <h2 className="text-lg font-bold text-blue-400">
-                {station.name}
+            <div className="flex-1">
+              <h2 className="text-lg font-bold text-blue-400 sm:truncate">
+                {station.name.length > 20 && window.innerWidth <= 640
+                  ? `${station.name.slice(0, 20)}...`
+                  : station.name}
               </h2>
               <p className="text-gray-300">
                 {station.city}, {station.country}

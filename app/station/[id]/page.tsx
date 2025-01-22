@@ -81,8 +81,6 @@ const StationDetailsPage = () => {
   const streams = station.streams || [];
   const topics = station.topics || [];
 
-  console.log('station', station);
-
   return (
     <main className="container tracking-wider mx-auto md:my-10 p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
       <Link
@@ -126,19 +124,21 @@ const StationDetailsPage = () => {
         )}
       </div>
 
-      <div className="relative flex justify-center items-center group md:my-16">
-        <Link
-          href={station.homepageUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="p-2"
-        >
-          {PlayIcon}
-        </Link>
+      <div className="relative flex justify-center items-center md:my-16">
+        <div className="group">
+          <Link
+            href={station.homepageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2"
+          >
+            {PlayIcon}
+          </Link>
 
-        <span className="hidden md:block absolute left-1/2 transform -translate-x-1/2 mt-52 mb-2 text-xs text-gray-100 bg-gray-700 p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
-          {station.homepageUrl}
-        </span>
+          <span className="hidden md:block absolute left-1/2 transform -translate-x-1/2 mb-2 text-xs text-gray-100 bg-gray-800 p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
+            {station.homepageUrl}
+          </span>
+        </div>
       </div>
 
       <h2 className="mt-10 mb-4 text-2xl font-bold text-blue-400">

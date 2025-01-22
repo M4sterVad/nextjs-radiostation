@@ -11,6 +11,8 @@ const Home: React.FC = () => {
   const [filteredStations, setFilteredStations] = useState<Playable[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(20); // 20 items per page for each segment
   const router = useRouter();
 
   useEffect(() => {
@@ -36,11 +38,34 @@ const Home: React.FC = () => {
         station.name.toLowerCase().includes(query.toLowerCase()),
       );
       setFilteredStations(filtered);
+      setCurrentPage(1); // Reset to the first page on search
     }
   };
 
   const handleStationClick = (id: string) => {
     router.push(`/station/${id}`);
+  };
+
+  // Calculate the indexes for the current page's data
+  const indexOfLastStation = currentPage * itemsPerPage;
+  const indexOfFirstStation = indexOfLastStation - itemsPerPage;
+  const currentStations = filteredStations.slice(
+    indexOfFirstStation,
+    indexOfLastStation,
+  );
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(filteredStations.length / itemsPerPage);
+
+  // Determine the range of page numbers to display
+  const pagesToShow = Math.min(
+    totalPages,
+    Math.ceil(filteredStations.length / 20),
+  );
+
+  // Pagination button handlers
+  const handlePageClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -59,11 +84,11 @@ const Home: React.FC = () => {
       <SearchBar onSearch={handleSearch} />
 
       <div className="grid gap-4 md:gap-8 mt-6">
-        {filteredStations.map((station: Playable) => (
+        {currentStations.map((station: Playable) => (
           <div
             key={station.id}
             className="bg-gray-800 p-4 md:p-8 rounded-lg shadow-md flex items-center space-x-6 cursor-pointer 
-          transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
+            transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
             onClick={() => handleStationClick(station.id)}
           >
             <picture className="flex-shrink-0">
@@ -91,6 +116,25 @@ const Home: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Pagination controls */}
+      <div className="flex justify-center mt-6 space-x-4">
+        {Array.from({ length: pagesToShow }, (_, index) => {
+          const pageNumber = index + 1;
+
+          return (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageClick(pageNumber)}
+              className={`px-4 py-2 text-white rounded-md ${
+                currentPage === pageNumber ? 'bg-blue-500' : 'hover:bg-gray-800'
+              }`}
+            >
+              {pageNumber}
+            </button>
+          );
+        })}
       </div>
     </main>
   );

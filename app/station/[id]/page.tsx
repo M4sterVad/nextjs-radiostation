@@ -87,16 +87,16 @@ const StationDetailsPage = () => {
     <main className="container tracking-wider mx-auto md:my-10 p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
       <Link
         href="/"
-        className="text-blue-400 font-bold mb-10 rounded hover:bg-gray-800 p-2 inline-flex items-center"
+        className="text-blue-400 font-bold mb-4 md:mb-6 rounded hover:bg-gray-800 p-2 inline-flex items-center"
       >
         {BackIcon}
       </Link>
 
-      <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-400">
+      <h1 className="text-4xl font-extrabold mb-8 text-center text-blue-400">
         {station.name}
       </h1>
 
-      <picture className="flex justify-center mb-6">
+      <picture className="flex justify-center mb-8">
         <img
           src={station.logo100x100}
           alt={station.name}

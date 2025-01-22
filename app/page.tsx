@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getRadioStations } from './api/getRadioStations';
 import { ApiResponse, Playable } from './types/radioStation';
+import SearchBar from './components/Searchbar';
 
 const Home: React.FC = () => {
   const [data, setData] = useState<ApiResponse | null>(null);
+  const [filteredStations, setFilteredStations] = useState<Playable[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -16,9 +18,7 @@ const Home: React.FC = () => {
       try {
         const response = await getRadioStations();
         setData(response);
-
-        // console.log("Fetched Radio Stations:", response);
-
+        setFilteredStations(response.playables); // Initially display all stations
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message);
@@ -29,6 +29,15 @@ const Home: React.FC = () => {
 
     fetchStations();
   }, []);
+
+  const handleSearch = (query: string) => {
+    if (data) {
+      const filtered = data.playables.filter((station) =>
+        station.name.toLowerCase().includes(query.toLowerCase()),
+      );
+      setFilteredStations(filtered);
+    }
+  };
 
   const handleStationClick = (id: string) => {
     router.push(`/station/${id}`);
@@ -42,15 +51,19 @@ const Home: React.FC = () => {
       <h1 className="text-5xl font-extrabold text-center text-blue-400 mb-6">
         {data?.title || 'Radio Stations'}
       </h1>
-      <p className="text-lg font-medium text-gray-300 mb-16 text-center">
-        Displaying {data?.count || 0} of {data?.totalCount || 0} total stations.
+      <p className="text-lg font-medium text-gray-300 mb-6 text-center">
+        Displaying {filteredStations.length} of {data?.totalCount || 0} total
+        stations.
       </p>
-      <div className="grid gap-4 md:gap-8">
-        {data?.playables.map((station: Playable) => (
+
+      <SearchBar onSearch={handleSearch} />
+
+      <div className="grid gap-4 md:gap-8 mt-6">
+        {filteredStations.map((station: Playable) => (
           <div
             key={station.id}
             className="bg-gray-800 p-4 md:p-8 rounded-lg shadow-md flex items-center space-x-6 cursor-pointer 
-   transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
+              transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
             onClick={() => handleStationClick(station.id)}
           >
             <picture>

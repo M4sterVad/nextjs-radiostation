@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { getRadioStationDetails } from '@/app/api/getRadioStations';
 import Link from 'next/link';
 import { StationDetails } from '@/app/types/radioStation';
+import Image from 'next/image';
 
 const StationDetailsPage = () => {
   const { id } = useParams();
@@ -94,13 +95,15 @@ const StationDetailsPage = () => {
         {station.name}
       </h1>
 
-      <picture className="flex justify-center mb-8">
-        <img
+      <div className="flex justify-center mb-8">
+        <Image
           src={station.logo100x100}
           alt={station.name}
-          className="w-40 h-40 object-cover rounded-full border-4 border-blue-500 shadow-md"
+          width={160}
+          height={160}
+          className="rounded-full border-4 border-blue-500 shadow-md object-cover"
         />
-      </picture>
+      </div>
 
       <p className="text-lg font-medium text-gray-200 mb-4">
         <span className="text-blue-400 font-bold">Genres:</span>{' '}

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getRadioStations } from './api/getRadioStations';
 import { ApiResponse, Playable } from './types/radioStation';
 import SearchBar from './components/Searchbar';
+import Image from 'next/image';
 
 const Home: React.FC = () => {
   const [data, setData] = useState<ApiResponse | null>(null);
@@ -91,13 +92,13 @@ const Home: React.FC = () => {
             transition-transform transform hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-lg"
             onClick={() => handleStationClick(station.id)}
           >
-            <picture className="flex-shrink-0">
-              <img
-                src={station.logo100x100}
-                alt={station.name}
-                className="w-16 h-16 object-cover rounded-full"
-              />
-            </picture>
+            <Image
+              src={station.logo100x100}
+              alt={station.name}
+              width={64}
+              height={64}
+              className="w-16 h-16 object-cover rounded-full"
+            />
             <div className="flex-1">
               <h2 className="text-lg font-bold text-blue-400 sm:truncate">
                 {station.name.length > 20 && window.innerWidth <= 640

@@ -3,7 +3,13 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['station-images-prod.radio-assets.com'],
+    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'station-images-prod.radio-assets.com',
+      },
+    ],
   },
 };
 
